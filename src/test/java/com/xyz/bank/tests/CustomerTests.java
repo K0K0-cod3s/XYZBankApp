@@ -56,9 +56,9 @@ public class CustomerTests extends TestBase {
         // Verify transaction history, filters, and reset functionality
     }
 
-//    @AfterAll
-//    public static void tearDownLogout() {
-//        // Add logout steps if required
-//        System.out.println("Logging out customer...");
-//    }
+    @AfterAll
+    public static void tearDownLogout() {
+        // Add logout steps if required
+        System.out.println("Logging out customer...");
+    }
 }
