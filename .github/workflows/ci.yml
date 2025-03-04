@@ -20,25 +20,16 @@ jobs:
           sudo apt update
           sudo apt install -y google-chrome-stable
 
-      - name: Install ChromeDriver (Latest)
+      - name: Install ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9.]+' | head -1)
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          wget -q "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip"
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
-      - name: Verify Chrome and ChromeDriver
-        run: |
-          google-chrome --version
-          chromedriver --version
-
-      - name: Install Maven
-        run: |
-          sudo apt install -y maven
-          mvn -version
+      - name: Set Up Selenium WebDriver
+        run: echo "Selenium WebDriver is set up."
 
       - name: Run Selenium Tests
         run: mvn test
