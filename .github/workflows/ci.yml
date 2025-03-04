@@ -9,31 +9,23 @@ on:
       - main
 
 jobs:
-  selenium-tests:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set Up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Install Chrome
+      - name: Install Google Chrome
         run: |
           sudo apt update
           sudo apt install -y google-chrome-stable
 
       - name: Install ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          wget -q "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip"
           unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
+          sudo mv chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
       - name: Set Up Selenium WebDriver
