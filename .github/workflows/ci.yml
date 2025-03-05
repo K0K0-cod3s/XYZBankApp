@@ -37,6 +37,3 @@ jobs:
 
       - name: Run Selenium Tests
         run: mvn test
-
-        strategy:
-          max-parallel: 1
