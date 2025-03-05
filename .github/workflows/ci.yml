@@ -28,8 +28,8 @@ jobs:
           sudo chmod +x /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
-      - name: Set Up Selenium WebDriver
-        run: echo "Selenium WebDriver is set up."
+#      - name: Set Up Selenium WebDriver
+#        run: echo "Selenium WebDriver is set up."
 
       - name: Run Selenium Tests
         run: mvn test
