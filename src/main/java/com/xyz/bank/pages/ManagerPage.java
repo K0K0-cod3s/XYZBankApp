@@ -55,11 +55,15 @@
 
 package com.xyz.bank.pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+
+import java.time.Duration;
 
 public class ManagerPage extends BasePage {
     @FindBy(css = "button[ng-click='addCust()']")
@@ -153,15 +157,32 @@ public class ManagerPage extends BasePage {
         searchCustomerInput.sendKeys(customerName);
     }
 
-    public void deleteCustomer(String customerName) {
-        String deleteButtonXPath = String.format(
-                "//td[contains(text(), '%s')]/..//button[contains(text(), 'Delete')]",
-                customerName
-        );
-        WebElement deleteButton = driver.findElement(By.xpath(deleteButtonXPath));
-        waitForElementToBeClickable(deleteButton);
-        deleteButton.click();
+    public void deleteCustomer(String postcode) {
+        try {
+            // XPath to locate the row containing the given Postcode
+            String rowXpath = "//tr[td[contains(text(), '" + postcode + "')]]";
+            // XPath for the "Delete" button in the same row
+            String deleteButtonXpath = rowXpath + "//button[contains(text(),'Delete')]";
+
+            // Wait for the delete button to be clickable
+            WebElement deleteButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(deleteButtonXpath)));
+
+            // Wait an additional 5 seconds before clicking
+            new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .until(ExpectedConditions.elementToBeClickable(deleteButton));
+
+            // Click the Delete button
+            Thread.sleep(3000);
+            deleteButton.click();
+
+            System.out.println("✅ Successfully deleted customer with Postcode: " + postcode);
+        }
+        catch (TimeoutException | InterruptedException e) {
+            System.out.println("❌ No matching customer found with Postcode: " + postcode);
+        }
     }
+
+
 
     public boolean isCustomerPresent(String firstName, String lastName) {
         String customerXPath = String.format(

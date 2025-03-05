@@ -28,6 +28,7 @@ public class CustomerAccountPage extends BasePage {
 
     public CustomerAccountPage(WebDriver driver) {
         super(driver);
+
     }
 
     public void makeDeposit(String amount) {

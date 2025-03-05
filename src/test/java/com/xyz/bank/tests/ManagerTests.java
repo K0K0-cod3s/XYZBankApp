@@ -95,7 +95,7 @@ public class ManagerTests extends TestBase {
 
         managerPage.viewCustomers();
         managerPage.searchCustomer("John Doe");
-        managerPage.deleteCustomer("John Doe");
+        managerPage.deleteCustomer("12345");
 
         // Verify customer was deleted
 //        assertFalse(managerPage.isCustomerPresent("John", "Doe"),
@@ -122,3 +122,4 @@ public class ManagerTests extends TestBase {
         System.out.println("All Manager Tests Completed Successfully");
     }
 }
+
