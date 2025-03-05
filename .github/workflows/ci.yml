@@ -28,8 +28,15 @@ jobs:
           sudo chmod +x /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
-#      - name: Set Up Selenium WebDriver
+      - name: Kill existing Chrome instances
+        run: pkill -9 chrome || true
+
+
+    #      - name: Set Up Selenium WebDriver
 #        run: echo "Selenium WebDriver is set up."
 
       - name: Run Selenium Tests
         run: mvn test
+
+        strategy:
+          max-parallel: 1
