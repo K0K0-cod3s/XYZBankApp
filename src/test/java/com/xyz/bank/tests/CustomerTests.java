@@ -6,6 +6,7 @@ import com.xyz.bank.pages.HomePage;
 import com.xyz.bank.utils.TestBase;
 import org.junit.jupiter.api.*;
 
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerTests extends TestBase {
 
