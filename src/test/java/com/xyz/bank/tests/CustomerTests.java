@@ -38,11 +38,9 @@ public class CustomerTests extends TestBase {
     @Test
     @Order(3)
     public void testWithdrawFunds() throws InterruptedException {
-        Thread.sleep(5000);
+
         accountPage.makeDeposit("1000");
-        Thread.sleep(2000);
         accountPage.makeWithdrawal("500");
-        Thread.sleep(2000);
 //        Assertions.assertEquals("500", accountPage.getBalance(), "Balance mismatch after withdrawal!");
     }
 
