@@ -31,14 +31,6 @@ jobs:
       - name: Kill existing Chrome instances
         run: pkill -9 chrome || true
 
-
-    #      - name: Set Up Selenium WebDriver
-#        run: echo "Selenium WebDriver is set up."
-
-      - name: Run Selenium Tests
-        run: mvn test
-
-
       - name: Run Selenium Tests
         run: mvn test
         continue-on-error: true  # Ensure workflow continues to send email even on failure
@@ -61,3 +53,17 @@ jobs:
             **Status**: ${{ job.status }}
 
             Check full logs here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Send Slack Notification
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          if [ "$STATUS" == "success" ]; then
+            message="✅ *Tests Passed!* ✅"
+          else
+            message="❌ *Tests Failed!* ❌"
+          fi
+
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"$message\nRepo: $GITHUB_REPOSITORY\nCommit: $GITHUB_SHA\nTrigger: $GITHUB_EVENT_NAME\nCheck logs: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
