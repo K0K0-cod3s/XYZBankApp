@@ -37,3 +37,27 @@ jobs:
 
       - name: Run Selenium Tests
         run: mvn test
+
+
+      - name: Run Selenium Tests
+        run: mvn test
+        continue-on-error: true  # Ensure workflow continues to send email even on failure
+
+      - name: Send Email Notification
+        if: always()  # Run this step regardless of test result (success or failure)
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_EMAIL }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "Selenium Test Results - ${{ github.workflow }} (Run #${{ github.run_number }})"
+          to: "etornam.koko@amalitech.com"
+          from: "GitHub Actions <${{ secrets.SMTP_EMAIL }}>"
+          body: |
+            **Repository**: ${{ github.repository }}
+            **Branch**: ${{ github.ref }}
+            **Commit**: ${{ github.sha }}
+            **Status**: ${{ job.status }}
+
+            Check full logs here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
