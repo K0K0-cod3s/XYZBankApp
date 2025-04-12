@@ -3,6 +3,8 @@ package com.xyz.bank.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 
 public class CustomerAccountPage extends BasePage {
     @FindBy(css = "button[ng-click='deposit()']")
@@ -28,7 +30,7 @@ public class CustomerAccountPage extends BasePage {
 
     public CustomerAccountPage(WebDriver driver) {
         super(driver);
-
+        PageFactory.initElements(driver, this);
     }
 
     public void makeDeposit(String amount) {

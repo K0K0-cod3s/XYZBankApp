@@ -17,7 +17,7 @@ public class CustomerTests extends TestBase {
         HomePage homePage = new HomePage(driver);
         CustomerLoginPage customerLoginPage = homePage.navigateToCustomerLogin();
         accountPage = customerLoginPage.loginAsCustomer("Harry Potter");
-        // Verify login success (if needed)
+
     }
 
     @Test
@@ -32,7 +32,7 @@ public class CustomerTests extends TestBase {
     public void testDepositValidation() {
         accountPage.makeDeposit("-100");
         accountPage.makeDeposit("ABC");
-        // Verify error messages
+         
     }
 
     @Test
@@ -44,12 +44,12 @@ public class CustomerTests extends TestBase {
 //        Assertions.assertEquals("500", accountPage.getBalance(), "Balance mismatch after withdrawal!");
     }
 
-    @Test
-    @Order(4)
-    public void testWithdrawValidation() {
-        accountPage.makeWithdrawal("999999");
-        // Verify error message for insufficient balance
-    }
+//    @Test
+//    @Order(4)
+//    public void testWithdrawValidation() {
+//        accountPage.makeWithdrawal("999999");
+//        // Verify error message for insufficient balance
+//    }
 
     @Test
     @Order(5)

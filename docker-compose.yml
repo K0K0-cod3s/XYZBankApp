@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  selenium-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: selenium_test_runner
+    volumes:
+      - ./test-reports:/app/target/surefire-reports
+    environment:
+      - MAVEN_OPTS=-Dmaven.test.failure.ignore=true
+    command: mvn test

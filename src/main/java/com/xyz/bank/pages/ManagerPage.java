@@ -1,57 +1,3 @@
-//package com.xyz.bank.pages;
-//
-//import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.support.FindBy;
-//
-//public class ManagerPage extends BasePage {
-//    @FindBy(css = "button[ng-click='addCust()']")
-//    private WebElement addCustomerBtn;
-//
-//    @FindBy(css = "button[ng-click='openAccount()']")
-//    private WebElement openAccountBtn;
-//
-//    @FindBy(css = "button[ng-click='showCust()']")
-//    private WebElement customersBtn;
-//
-//    // Add Customer Form
-//    @FindBy(css = "input[ng-model='fName']")
-//    private WebElement firstNameInput;
-//
-//    @FindBy(css = "input[ng-model='lName']")
-//    private WebElement lastNameInput;
-//
-//    @FindBy(css = "input[ng-model='postCd']")
-//    private WebElement postCodeInput;
-//
-//    @FindBy(css = "button[type='submit']")
-//    private WebElement submitCustomerBtn;
-//
-//    public ManagerPage(WebDriver driver) {
-//        super(driver);
-//    }
-//
-//    public void addCustomer(String firstName, String lastName, String postCode) {
-//        waitForElementToBeClickable(addCustomerBtn);
-//        addCustomerBtn.click();
-//
-//        waitForElementToBeVisible(firstNameInput);
-//        firstNameInput.sendKeys(firstName);
-//        lastNameInput.sendKeys(lastName);
-//        postCodeInput.sendKeys(postCode);
-//        submitCustomerBtn.click();
-//    }
-//
-//    public void openAccount() {
-//        waitForElementToBeClickable(openAccountBtn);
-//        openAccountBtn.click();
-//    }
-//
-//    public void viewCustomers() {
-//        waitForElementToBeClickable(customersBtn);
-//        customersBtn.click();
-//    }
-//}
 
 package com.xyz.bank.pages;
 
@@ -159,15 +105,15 @@ public class ManagerPage extends BasePage {
 
     public void deleteCustomer(String postcode) {
         try {
-            // XPath to locate the row containing the given Postcode
+
             String rowXpath = "//tr[td[contains(text(), '" + postcode + "')]]";
-            // XPath for the "Delete" button in the same row
+
             String deleteButtonXpath = rowXpath + "//button[contains(text(),'Delete')]";
 
-            // Wait for the delete button to be clickable
+
             WebElement deleteButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(deleteButtonXpath)));
 
-            // Wait an additional 5 seconds before clicking
+
             new WebDriverWait(driver, Duration.ofSeconds(3))
                     .until(ExpectedConditions.elementToBeClickable(deleteButton));
 

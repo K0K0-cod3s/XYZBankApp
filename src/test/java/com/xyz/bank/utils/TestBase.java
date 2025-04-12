@@ -50,8 +50,8 @@ public class TestBase {
         // Configure Chrome options
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis()); // Unique profile
-        options.addArguments("--headless");  // Run in headless mode (remove if you need UI)
-        options.addArguments("--disable-gpu"); // Recommended for headless mode
+//        options.addArguments("--headless");  // Run in headless mode (remove if you need UI)
+//        options.addArguments("--disable-gpu"); // Recommended for headless mode
         options.addArguments("--no-sandbox"); // Helps in CI/CD environments
         options.addArguments("--disable-dev-shm-usage"); // Prevents crashes in Docker/Linux
 
