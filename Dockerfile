@@ -8,8 +8,7 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     apt-get install -y ./google-chrome-stable_current_amd64.deb && \
     rm google-chrome-stable_current_amd64.deb
 
-# Install specific ChromeDriver version
-# Using a recent stable version that works with current Chrome
+# Install specific ChromeDriver version (Chrome 120 compatible)
 RUN wget -q https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chromedriver-linux64.zip && \
     unzip chromedriver-linux64.zip && \
     mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && \
@@ -25,5 +24,18 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Run Maven tests by default
-CMD ["mvn", "test"]
+# Run Maven tests, send Slack and Email notifications based on result
+CMD bash -c '\
+  mvn test; \
+  STATUS=$?; \
+  if [ "$STATUS" -eq 0 ]; then \
+    curl -X POST -H "Content-type: application/json" \
+      --data "{\"text\":\"✅ Selenium tests passed in Docker!\"}" $SLACK_WEBHOOK_URL; \
+    echo "Selenium tests passed" | mail -s "✅ Selenium Tests Passed" $EMAIL_TO; \
+  else \
+    curl -X POST -H "Content-type: application/json" \
+      --data "{\"text\":\"❌ Selenium tests failed in Docker!\"}" $SLACK_WEBHOOK_URL; \
+    echo "Selenium tests failed" | mail -s "❌ Selenium Tests Failed" $EMAIL_TO; \
+  fi; \
+  exit $STATUS \
+'

@@ -10,4 +10,5 @@ services:
       - ./test-reports:/app/target/surefire-reports
     environment:
       - MAVEN_OPTS=-Dmaven.test.failure.ignore=true
-    command: mvn test
+      - SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+      - EMAIL_TO=etorkoko27@gmail.com
